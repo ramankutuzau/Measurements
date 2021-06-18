@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Data.DB,
-  mySQLDbTables, Vcl.DBCtrls;
+  mySQLDbTables, Vcl.DBCtrls,Users, Vcl.ExtCtrls;
 
 type
   TForm1 = class(TForm)
@@ -35,9 +35,10 @@ type
     Button1: TButton;
     MySQLDatabase1: TMySQLDatabase;
     DBLookupListBoxUsers: TDBLookupListBox;
-    ScrollBox1: TScrollBox;
+    ScrollBoxUsers: TScrollBox;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure DateTimePickerMeasurChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -48,6 +49,7 @@ var
   Form1: TForm1;
   DataSourceMeasur : TDataSource;
   MySQLQueryMeasur : TMySQLQuery;
+  Users : TUsers;
 
 implementation
 
@@ -124,6 +126,13 @@ begin
    end;
 
 
+procedure TForm1.DateTimePickerMeasurChange(Sender: TObject);
+var Date: String;
+begin
+Date := FormatDateTime('yyyy-mm-dd',DateTimePickerMeasur.Date);
+Users.AddUserPanel(Date);
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 var user:String; i:integer;
 begin
@@ -139,10 +148,11 @@ begin
    DBLookupListBoxUsers.ListSource := DataSourceMeasur;
    DBLookupListBoxUsers.KeyField := 'idUser';
    DBLookupListBoxUsers.ListField := 'UserName';
+
    ComboBoxTime.ItemIndex := 0;
- //  DBLookupListBoxUsers.KeyValue := 1;
 
-
+    Users := TUsers.Create(form1,ScrollBoxUsers,MySQLQueryMeasur,
+    MySQLDatabase1,DataSourceMeasur);
    end;
 
 end.

@@ -22,15 +22,11 @@ object Form1: TForm1
     Height = 461
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 24
-    ExplicitTop = 24
-    ExplicitWidth = 281
-    ExplicitHeight = 481
     object Label1: TLabel
       Left = 16
       Top = 12
-      Width = 80
-      Height = 15
+      Width = 81
+      Height = 16
       Caption = #1048#1089#1087#1086#1083#1085#1080#1090#1077#1083#1100':'
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
@@ -43,7 +39,7 @@ object Form1: TForm1
       Left = 64
       Top = 115
       Width = 32
-      Height = 15
+      Height = 16
       Caption = #1044#1072#1090#1072':'
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
@@ -55,8 +51,8 @@ object Form1: TForm1
     object Label3: TLabel
       Left = 41
       Top = 174
-      Width = 55
-      Height = 15
+      Width = 54
+      Height = 16
       Caption = #1058#1077#1083#1077#1092#1086#1085':'
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
@@ -68,8 +64,8 @@ object Form1: TForm1
     object Label4: TLabel
       Left = 64
       Top = 144
-      Width = 32
-      Height = 15
+      Width = 34
+      Height = 16
       Caption = #1060#1048#1054':'
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
@@ -81,8 +77,8 @@ object Form1: TForm1
     object Label5: TLabel
       Left = 30
       Top = 204
-      Width = 66
-      Height = 15
+      Width = 67
+      Height = 16
       Caption = #1053#1072#1089'. '#1087#1091#1085#1082#1090':'
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
@@ -94,8 +90,8 @@ object Form1: TForm1
     object Label6: TLabel
       Left = 56
       Top = 233
-      Width = 40
-      Height = 15
+      Width = 39
+      Height = 16
       Caption = #1059#1083#1080#1094#1072':'
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
@@ -107,8 +103,8 @@ object Form1: TForm1
     object Label7: TLabel
       Left = 68
       Top = 262
-      Width = 28
-      Height = 15
+      Width = 29
+      Height = 16
       Caption = #1044#1086#1084':'
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
@@ -120,8 +116,8 @@ object Form1: TForm1
     object Label8: TLabel
       Left = 149
       Top = 262
-      Width = 61
-      Height = 15
+      Width = 59
+      Height = 16
       Caption = #1050#1074#1072#1088#1090#1080#1088#1072':'
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
@@ -133,8 +129,8 @@ object Form1: TForm1
     object Label9: TLabel
       Left = 41
       Top = 291
-      Width = 55
-      Height = 15
+      Width = 57
+      Height = 16
       Caption = #1055#1086#1076#1098#1077#1079#1076':'
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
@@ -146,8 +142,8 @@ object Form1: TForm1
     object Label10: TLabel
       Left = 175
       Top = 291
-      Width = 35
-      Height = 15
+      Width = 34
+      Height = 16
       Caption = #1069#1090#1072#1078':'
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
@@ -159,8 +155,8 @@ object Form1: TForm1
     object Label11: TLabel
       Left = 11
       Top = 317
-      Width = 85
-      Height = 15
+      Width = 84
+      Height = 16
       Caption = #1050#1086#1084#1084#1077#1085#1090#1072#1088#1080#1081':'
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
@@ -173,7 +169,7 @@ object Form1: TForm1
       Left = 102
       Top = 112
       Width = 91
-      Height = 23
+      Height = 24
       Date = 44363.000000000000000000
       Time = 0.494157187502423800
       Font.Charset = RUSSIAN_CHARSET
@@ -183,12 +179,13 @@ object Form1: TForm1
       Font.Style = []
       ParentFont = False
       TabOrder = 0
+      OnChange = DateTimePickerMeasurChange
     end
     object ComboBoxTime: TComboBox
       Left = 199
       Top = 112
       Width = 58
-      Height = 23
+      Height = 24
       Style = csDropDownList
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
@@ -218,7 +215,7 @@ object Form1: TForm1
       Left = 102
       Top = 172
       Width = 155
-      Height = 23
+      Height = 24
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -234,7 +231,7 @@ object Form1: TForm1
       Left = 102
       Top = 141
       Width = 155
-      Height = 23
+      Height = 24
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -249,7 +246,7 @@ object Form1: TForm1
       Left = 102
       Top = 201
       Width = 155
-      Height = 23
+      Height = 24
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -262,7 +259,7 @@ object Form1: TForm1
       Left = 102
       Top = 230
       Width = 155
-      Height = 23
+      Height = 24
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -275,7 +272,7 @@ object Form1: TForm1
       Left = 102
       Top = 259
       Width = 43
-      Height = 23
+      Height = 24
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -288,7 +285,7 @@ object Form1: TForm1
       Left = 214
       Top = 259
       Width = 43
-      Height = 23
+      Height = 24
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -301,7 +298,7 @@ object Form1: TForm1
       Left = 102
       Top = 288
       Width = 43
-      Height = 23
+      Height = 24
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -315,7 +312,7 @@ object Form1: TForm1
       Left = 214
       Top = 288
       Width = 43
-      Height = 23
+      Height = 24
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -343,7 +340,7 @@ object Form1: TForm1
     object Button1: TButton
       Left = 11
       Top = 412
-      Width = 267
+      Width = 255
       Height = 38
       Caption = #1047#1072#1087#1080#1089#1072#1090#1100' '#1085#1072' '#1079#1072#1084#1077#1088
       Font.Charset = RUSSIAN_CHARSET
@@ -359,7 +356,7 @@ object Form1: TForm1
       Left = 102
       Top = 12
       Width = 155
-      Height = 94
+      Height = 100
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -368,7 +365,7 @@ object Form1: TForm1
       ParentFont = False
       TabOrder = 12
     end
-    object ScrollBox1: TScrollBox
+    object ScrollBoxUsers: TScrollBox
       Left = 272
       Top = 12
       Width = 481
@@ -377,7 +374,7 @@ object Form1: TForm1
     end
   end
   object MySQLDatabase1: TMySQLDatabase
-    DatabaseName = 'measurements'
+    DatabaseName = 'database1'
     UserName = 'root'
     UserPassword = 'root'
     Host = 'localhost'
@@ -385,7 +382,7 @@ object Form1: TForm1
     Params.Strings = (
       'Port=3306'
       'TIMEOUT=30'
-      'DatabaseName=measurements'
+      'DatabaseName=database1'
       'Host=localhost'
       'UID=root'
       'PWD=root')
