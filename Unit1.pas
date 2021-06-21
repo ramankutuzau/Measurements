@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Data.DB,
-  mySQLDbTables, Vcl.DBCtrls,Users, Vcl.ExtCtrls;
+  mySQLDbTables, Vcl.DBCtrls, Vcl.ExtCtrls,UsersMeasur,unit2;
 
 type
   TForm1 = class(TForm)
@@ -50,14 +50,14 @@ var
   DataSourceMeasur : TDataSource;
   MySQLQueryMeasur : TMySQLQuery;
   Users : TUsers;
-
+  Date: String;
 implementation
 
 {$R *.dfm}
 
 procedure TForm1.Button1Click(Sender: TObject);
 var User,Client,Manager,City,Street,House,Flat,
-Floor,Entrance,Status,Date,Time,DateNow,Comment,name : String;
+Floor,Entrance,Status,Time,DateNow,Comment,name : String; i: Integer; checkDateTime :Boolean;
 
 begin
 
@@ -65,7 +65,7 @@ begin
 
                  User := DBLookupListBoxUsers.KeyValue;
                  Name := '2';  // add
-                 Client := '2'; // add
+                 Client := '1'; // add
                  Manager := '3'; // add current user
                  City := EditCity.Text;
                  Street := EditStreet.Text;
@@ -76,46 +76,46 @@ begin
                  Status := 'Замер назначен';
                  Date :=   FormatDateTime('yyyy-mm-dd',DateTimePickerMeasur.Date); // Datetostr(DateTimePickerMeasur.Date);
                  Time := ComboBoxTime.Items[ComboBoxTime.ItemIndex];  // selected current time
-                 DateTimePickerMeasur.Date := now;
-                 DateNow :=FormatDateTime('yyyy-mm-dd',DateTimePickerMeasur.Date);
+                 DateNow :=FormatDateTime('yyyy-mm-dd',now);
                  Comment := MemoComment.Text;
 
-                 // check Date and Time
-                 MySQLQueryMeasur := TMySQLQuery.Create(Application);
-                 MySQLQueryMeasur.Database := MySQLDatabase1;
-                 MySQLQueryMeasur.SQL.Text := 'SELECT MeasurementsVisible FROM ListMeasurements '+
-                 'WHERE ListMeasurementsDate = "'+date+'" AND ListMeasurementsTime = "'+time+':00"';
-                 MySQLQueryMeasur.Active := true;
+                checkDateTime := false;
 
-                 if MySQLQueryMeasur.Fields[0].asString = '1' then showmessage('Замер на это время уже назначен.') else
-                  begin
-                 // check Date and Time
+                for i := 0 to Length(Users.RecordTime) - 1 do
+                 begin
+                   if Users.RecordTime[i] = ComboBoxTime.Text+':00' then
+                   checkDateTime := true;
 
-                   MySQLQueryMeasur := TMySQLQuery.Create(Application);
-                   MySQLQueryMeasur.Database := MySQLDatabase1;
-                   MySQLQueryMeasur.SQL.Text := 'INSERT INTO `listmeasurements`'+
-                   '( `ClientID`, `ManagerID`, `UserID`, `MeasurementsCity`,'+
-                   '`MeasurementsStreet`, `MeasurementsHouse`, `MeasurementsFlat`,'+
-                   ' `MeasurementsEntrance`,'+
-                   ' `MeasurementsFloor`, `MeasurementsStatus`, `ListMeasurementsDate`,'+
-                   ' `ListMeasurementsTime`,'+
-                   ' `ListMeasurementsDateAdd`, `ListMeasurementsComment`,'+
-                   ' `MeasurementsVisible`) VALUES'+
-                   '("'+client+'", "'+manager+'", "'+user+'", "'+city+'",'+
-                   ' "'+street+'", "'+house+'", "'+flat+'",'+
-                   ' "'+entrance+'", "'+floor+'", "'+status+'",'+
-                   ' "'+date+'", "'+time+'", "'+dateNow+'", "'+comment+'",1)';
-                   MySQLQueryMeasur.ExecSQL;
+                 end;
+                   if CheckDateTime = false then
+                   begin
+                       MySQLQueryMeasur := TMySQLQuery.Create(Application);
+                       MySQLQueryMeasur.Database := MySQLDatabase1;
+                       MySQLQueryMeasur.SQL.Text := 'INSERT INTO `listmeasurements`'+
+                       '( `ClientID`, `ManagerID`, `UserID`,`CompanyID`, `MeasurementsCity`,'+
+                       '`MeasurementsStreet`, `MeasurementsHouse`, `MeasurementsFlat`,'+
+                       ' `MeasurementsEntrance`,'+
+                       ' `MeasurementsFloor`, `MeasurementsStatus`, `ListMeasurementsDate`,'+
+                       ' `ListMeasurementsTime`,'+
+                       ' `ListMeasurementsDateAdd`, `ListMeasurementsComment`,'+
+                       ' `MeasurementsVisible`) VALUES'+
+                       '('''+client+''', '''+manager+''', '''+user+''', 1, '''+city+''','+
+                       ' '''+street+''', '''+house+''', '''+flat+''','+
+                       ' '''+entrance+''', '''+floor+''', '''+status+''','+
+                       ' '''+date+''', '''+time+''', '''+dateNow+''', '''+comment+''',1)';
+                       MySQLQueryMeasur.ExecSQL;
 
-                  EditCity.Clear;
-                  EditStreet.Clear;
-                  EditHouse.Clear;
-                  EditFlat.Clear;
-                  EditEntrance.Clear;
-                  EditFloor.Clear;
-                  MemoComment.Clear;
+                      EditCity.Clear;
+                      EditStreet.Clear;
+                      EditHouse.Clear;
+                      EditFlat.Clear;
+                      EditEntrance.Clear;
+                      EditFloor.Clear;
+                      MemoComment.Clear;
 
-               end;
+                      Users.AddUserPanel(Date);
+                   end else Showmessage('Уже назначен замер на это время');
+
 
 
 
@@ -126,8 +126,9 @@ begin
    end;
 
 
+
+
 procedure TForm1.DateTimePickerMeasurChange(Sender: TObject);
-var Date: String;
 begin
 Date := FormatDateTime('yyyy-mm-dd',DateTimePickerMeasur.Date);
 Users.AddUserPanel(Date);
@@ -149,10 +150,14 @@ begin
    DBLookupListBoxUsers.KeyField := 'idUser';
    DBLookupListBoxUsers.ListField := 'UserName';
 
-   ComboBoxTime.ItemIndex := 0;
 
     Users := TUsers.Create(form1,ScrollBoxUsers,MySQLQueryMeasur,
     MySQLDatabase1,DataSourceMeasur);
+    DateTimePickerMeasur.Date := Now;
+    Date := FormatDateTime('yyyy-mm-dd',DateTimePickerMeasur.Date);
+    Users.AddUserPanel(Date);
+
+
    end;
 
 end.

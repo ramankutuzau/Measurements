@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899.12.30 00:00:00.000.649,=D:\Grodno.okna\Measurements\Unit2.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.998,D:\Grodno.okna\Measurements\Unit2.pas=D:\Grodno.okna\Measurements\Users.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.670,G:\Projects\Unit1.dfm=G:\Measurements\Measurements\Unit1.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.670,G:\Projects\Unit1.pas=G:\Measurements\Measurements\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.215,=G:\Projects\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.949,G:\Projects\Project1.dproj=G:\Measurements\Measurements\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.710,G:\Measurements\Measurements\Users.pas=G:\Measurements\Measurements\UsersMeasur.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.670,G:\Projects\Unit1.dfm=G:\Measurements\Measurements\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.990,=G:\Measurements\Measurements\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.998,D:\Grodno.okna\Measurements\Unit2.pas=D:\Grodno.okna\Measurements\Users.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.649,=D:\Grodno.okna\Measurements\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.215,=G:\Projects\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>
