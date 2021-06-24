@@ -99,12 +99,12 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="Unit1.pas">
-            <Form>Form1</Form>
+            <Form>FormMeasurement</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UsersMeasur.pas"/>
         <DCCReference Include="Unit2.pas">
-            <Form>Form2</Form>
+            <Form>FormClient</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

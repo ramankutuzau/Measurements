@@ -8,7 +8,7 @@ uses
   mySQLDbTables, Vcl.DBCtrls, Vcl.ExtCtrls,UsersMeasur,unit2;
 
 type
-  TForm1 = class(TForm)
+  TFormMeasurement = class(TForm)
     GroupBox1: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
@@ -46,7 +46,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  FormMeasurement: TFormMeasurement;
   DataSourceMeasur : TDataSource;
   MySQLQueryMeasur : TMySQLQuery;
   Users : TUsers;
@@ -55,18 +55,18 @@ implementation
 
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
-var User,Client,Manager,City,Street,House,Flat,
-Floor,Entrance,Status,Time,DateNow,Comment,name : String; i: Integer; checkDateTime :Boolean;
+procedure TFormMeasurement.Button1Click(Sender: TObject);
+var UserID,ClientID,ManagerID,City,Street,House,Flat,
+Floor,Entrance,Status,Time,DateNow,Comment,NameID : String; i: Integer; checkDateTime :Boolean;
 
 begin
 
     if (DBLookupListBoxUsers.KeyValue <> null ) then begin
 
-                 User := DBLookupListBoxUsers.KeyValue;
-                 Name := '2';  // add
-                 Client := '1'; // add
-                 Manager := '3'; // add current user
+                 UserID := DBLookupListBoxUsers.KeyValue;
+                 NameID := '2';  // add
+                 ClientID := '1'; // add
+                 ManagerID := '3'; // add current user
                  City := EditCity.Text;
                  Street := EditStreet.Text;
                  House := EditHouse.Text;
@@ -79,15 +79,14 @@ begin
                  DateNow :=FormatDateTime('yyyy-mm-dd',now);
                  Comment := MemoComment.Text;
 
-                checkDateTime := false;
+                   Checkdatetime := true;
+                   if Length(Users.strUserTime) > 0 then
+                   begin
+                   Checkdatetime := Users.CheckDateTime(Users.strUserTime,
+                   DBLookupListBoxUsers.SelectedItem,ComboBoxTime.Text);
+                   end;
 
-                for i := 0 to Length(Users.RecordTime) - 1 do
-                 begin
-                   if Users.RecordTime[i] = ComboBoxTime.Text+':00' then
-                   checkDateTime := true;
-
-                 end;
-                   if CheckDateTime = false then
+                   if CheckDateTime = true then
                    begin
                        MySQLQueryMeasur := TMySQLQuery.Create(Application);
                        MySQLQueryMeasur.Database := MySQLDatabase1;
@@ -99,7 +98,7 @@ begin
                        ' `ListMeasurementsTime`,'+
                        ' `ListMeasurementsDateAdd`, `ListMeasurementsComment`,'+
                        ' `MeasurementsVisible`) VALUES'+
-                       '('''+client+''', '''+manager+''', '''+user+''', 1, '''+city+''','+
+                       '('''+clientID+''', '''+managerID+''', '''+userID+''', 1, '''+city+''','+
                        ' '''+street+''', '''+house+''', '''+flat+''','+
                        ' '''+entrance+''', '''+floor+''', '''+status+''','+
                        ' '''+date+''', '''+time+''', '''+dateNow+''', '''+comment+''',1)';
@@ -128,15 +127,17 @@ begin
 
 
 
-procedure TForm1.DateTimePickerMeasurChange(Sender: TObject);
+procedure TFormMeasurement.DateTimePickerMeasurChange(Sender: TObject);
 begin
 Date := FormatDateTime('yyyy-mm-dd',DateTimePickerMeasur.Date);
 Users.AddUserPanel(Date);
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TFormMeasurement.FormCreate(Sender: TObject);
 var user:String; i:integer;
 begin
+
+   DBLookupListBoxUsers.Height := 94;
 
    MySQLQueryMeasur := TMySQLQuery.Create(Application);
    MySQLQueryMeasur.Database := MySQLDatabase1;
@@ -151,12 +152,17 @@ begin
    DBLookupListBoxUsers.ListField := 'UserName';
 
 
-    Users := TUsers.Create(form1,ScrollBoxUsers,MySQLQueryMeasur,
-    MySQLDatabase1,DataSourceMeasur);
+    Users := TUsers.Create(FormMeasurement,ScrollBoxUsers,
+    MySQLDatabase1);
     DateTimePickerMeasur.Date := Now;
     Date := FormatDateTime('yyyy-mm-dd',DateTimePickerMeasur.Date);
+
     Users.AddUserPanel(Date);
 
+
+    ScrollBoxUsers.Width := 481;
+    ScrollBoxUsers.Height := 438;
+    ScrollBoxUsers.AutoScroll := true;
 
    end;
 

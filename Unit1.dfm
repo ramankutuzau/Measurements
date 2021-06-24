@@ -1,8 +1,8 @@
-object Form1: TForm1
+object FormMeasurement: TFormMeasurement
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = 'Form1'
+  Caption = 'FormMeasurement'
   ClientHeight = 461
   ClientWidth = 756
   Color = clWhite
@@ -169,7 +169,7 @@ object Form1: TForm1
     object DateTimePickerMeasur: TDateTimePicker
       Left = 102
       Top = 112
-      Width = 91
+      Width = 94
       Height = 23
       Date = 44363.000000000000000000
       Time = 0.494157187502423800
@@ -253,7 +253,7 @@ object Form1: TForm1
       Font.Height = -13
       Font.Name = 'SF UI Display'
       Font.Style = []
-      MaxLength = 100
+      MaxLength = 25
       ParentFont = False
       TabOrder = 4
     end
@@ -267,7 +267,7 @@ object Form1: TForm1
       Font.Height = -13
       Font.Name = 'SF UI Display'
       Font.Style = []
-      MaxLength = 100
+      MaxLength = 25
       ParentFont = False
       TabOrder = 5
     end
@@ -314,7 +314,7 @@ object Form1: TForm1
       TabOrder = 8
     end
     object EditFloor: TEdit
-      Left = 216
+      Left = 214
       Top = 288
       Width = 43
       Height = 23
@@ -373,7 +373,7 @@ object Form1: TForm1
     end
     object ScrollBoxUsers: TScrollBox
       Left = 272
-      Top = 12
+      Top = 3
       Width = 481
       Height = 438
       TabOrder = 13

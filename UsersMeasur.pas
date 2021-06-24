@@ -11,13 +11,14 @@ type
   TUsers = class(TForm)
 
 
-Constructor Create(Form: TForm; ScrollBox : TScrollbox;
- MySQLQuery : TMySQLQuery; MySQLDatabase : TMySQLDatabase;
- DataSource : TDataSource);
+Constructor Create(Form: TForm; ScrollBox : TScrollbox; MySQLDatabase : TMySQLDatabase);
   procedure AddUserPanel(Date : String);
-
+  function CheckDateTime(StrUserTime : array of String;SelectedUser,Selectedtime:String):Boolean;
+  destructor Destroy;
   public
   recordTime : array of String;
+  recordUsers: array of String;
+  strUserTime : array of  String;
   end;
 
 implementation
@@ -33,15 +34,13 @@ MySQLDatabase1 : TMySQLDatabase;
 DataSourceMeasur : TDataSource;
 
 
-Constructor TUsers.Create(Form: TForm; ScrollBox : TScrollbox;
- MySQLQuery : TMySQLQuery; MySQLDatabase : TMySQLDatabase;
- DataSource : TDataSource);
+Constructor TUsers.Create(Form: TForm; ScrollBox : TScrollbox; MySQLDatabase : TMySQLDatabase);
 begin
   Form1 := Form;
   ScrollBoxUser := ScrollBox;
-  MySQLQueryMeasur := MySQLQuery;
   MySQLDatabase1 := MySQLDatabase;
-  DataSourceMeasur := DataSource;
+  ScrollBoxUser.AutoScroll := true;
+
 end;
 
 
@@ -49,6 +48,9 @@ procedure TUsers.AddUserPanel(Date : String);
 var i,j,topLabel,topPanel,n,k : integer;
 saveUserName,strTime : String;
 begin
+
+
+
 
    MySQLQueryMeasur := TMySQLQuery.Create(Application);
    MySQLQueryMeasur.Database := MySQLDatabase1;
@@ -84,19 +86,31 @@ begin
 
      end;
 
-     MySQLQueryMeasur.Last;
-     Setlength(recordTime,MySQLQueryMeasur.RecNo);
-     MySQLQueryMeasur.First;
+
+       MySQLQueryMeasur.Last;
+       Setlength(strUserTime,MySQLQueryMeasur.RecNo);
+       MySQLQueryMeasur.First;
+
+
+
+
+
+
      i := 0;
  with MySQLQueryMeasur do
- begin
-
+  begin
 
   SaveuserName := fieldbyname('UserName').asstring;
      while not MySQLQueryMeasur.Eof do
       begin
-      recordtime[i] := fieldbyname('ListMeasurementsTime').AsString;
-      inc(i);
+
+
+      strUserTime[i] := fieldbyname('UserName').AsString + ',' +
+      fieldbyname('ListMeasurementsTime').AsString;
+      i := i + 1;
+
+
+
 
 
        if SaveUserName <> fieldbyname('UserName').AsString then
@@ -130,26 +144,29 @@ begin
           Left := 16;
           Top := topPanel;
           Width := 440;
-          Height := 41;
+          Height := 33;
           Color := clSkyBlue;
           ParentBackground := False;
           TabOrder := 0;
           end;
 
-        topPanel := topPanel + 50;
+        topPanel := topPanel + 40;
 
         LabelMeasur := TLabel.Create(PanelUser);
         LabelMeasur.Parent := PanelUser;
 
           with LabelMeasur do begin
           Left := 16;
-          Top := 16;
-          Width := 37;
+          Top := 10;
+          Width := 410;
           Height := 13;
-          strTime := FormatDateTime('hh:mm',strtodatetime(MySQLQueryMeasur.Fields[1].AsString));
+          AutoSize := false;
+          strTime := FormatDateTime('hh:mm',
+          strtodatetime(MySQLQueryMeasur.FieldByName('ListMeasurementsTime').AsString));
           Caption := strtime + ' | Нас.Пункт: '+
-          MySQLQueryMeasur.Fields[2].AsString + ' | Ул: ' + MySQLQueryMeasur.Fields[3].AsString +
-          ' | Дом : '+MySQLQueryMeasur.Fields[4].AsString;
+          MySQLQueryMeasur.FieldByName('MeasurementsCity').AsString
+          + ' | Ул: ' + MySQLQueryMeasur.FieldByName('MeasurementsStreet').AsString +
+          ' | Дом : '+MySQLQueryMeasur.FieldByName('MeasurementsHouse').AsString;
           Font.Color := clWindowText;
           Font.Height := -13;
           Font.Name := 'SF UI Display';
@@ -165,13 +182,41 @@ begin
 
 
 
+  end;
+
+
+
 
  end;
 
+ function TUsers.CheckDateTime(StrUserTime : array of String;SelectedUser,SelectedTime:String):Boolean;
+ var arrUser,arrTime :array of  string; s:String; i :integer;
+ begin
+
+ SetLength(arrUser,Length(StrUserTime));
+ SetLength(arrTime,Length(StrUserTime));
+ for i := 0 to Length(StrUserTime)- 1 do
+  begin
+
+    s :=StrUserTime[i]; //исходная строка
+    arrUser[i] :=Copy(s, 1, Pos(',' ,s)-1); //до  разделителя
+    arrTime[i] :=Copy(s, Pos(',' ,s)+1, Length(s)); //после разделителя
+
+    if (arrUser[i] = SelectedUser) and (arrTime[i] = SelectedTime+':00')  then
+    begin
+       CheckDateTime := false;
+       exit
+    end else CheckDateTime := true;
+
+
+  end;
 
  end;
 
+destructor TUsers.Destroy;
+begin
 
+end;
 
 
 end.

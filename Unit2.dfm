@@ -1,10 +1,10 @@
-object Form2: TForm2
+object FormClient: TFormClient
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = 'Form2'
+  Caption = 'FormClient'
   ClientHeight = 480
-  ClientWidth = 481
+  ClientWidth = 463
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object Form2: TForm2
   object GroupBox1: TGroupBox
     Left = 8
     Top = 16
-    Width = 465
+    Width = 449
     Height = 57
     TabOrder = 0
     object ButtonRecord: TButton
@@ -35,18 +35,19 @@ object Form2: TForm2
       Font.Style = []
       ParentFont = False
       TabOrder = 0
+      OnClick = ButtonRecordClick
     end
   end
   object GroupBox2: TGroupBox
     Left = 8
     Top = 79
-    Width = 465
+    Width = 449
     Height = 393
     TabOrder = 1
     object ScrollBoxClients: TScrollBox
       Left = 8
       Top = 10
-      Width = 449
+      Width = 433
       Height = 374
       TabOrder = 0
     end
@@ -64,7 +65,7 @@ object Form2: TForm2
       'PWD=root')
     SSLProperties.TLSVersion = tlsAuto
     DatasetOptions = []
-    Left = 424
-    Top = 425
+    Left = 392
+    Top = 417
   end
 end

@@ -8,13 +8,15 @@ uses
   mySQLDbTables;
 
 type
-  TForm2 = class(TForm)
+  TFormClient = class(TForm)
     GroupBox1: TGroupBox;
     ButtonRecord: TButton;
     GroupBox2: TGroupBox;
     ScrollBoxClients: TScrollBox;
     MySQLDatabase1: TMySQLDatabase;
     procedure FormCreate(Sender: TObject);
+    procedure ButtonRecordClick(Sender: TObject);
+    procedure AddClientPanel();
   private
     { Private declarations }
   public
@@ -22,7 +24,7 @@ type
   end;
 
 var
-  Form2: TForm2;
+  FormClient: TFormClient;
   MySQLQueryClient : TMySQLQuery;
   PanelClient : TPanel;
   LabelDate : TLabel;
@@ -35,9 +37,25 @@ implementation
 
 {$R *.dfm}
 
-procedure TForm2.FormCreate(Sender: TObject);
+uses Unit1;
+
+procedure TFormClient.ButtonRecordClick(Sender: TObject);
+begin
+FormMeasurement.ShowModal;
+end;
+
+procedure TFormClient.FormCreate(Sender: TObject);
+begin
+
+AddClientPanel();
+end;
+
+
+
+procedure TFormClient.AddClientPanel();
 var ClientID, ManagerName,strTime : string; topPanel : integer;
 begin
+
     ClientID := '2';
     ManagerName := '';
     MySQLQueryClient := TMySQLQuery.Create(Application);
@@ -57,7 +75,7 @@ begin
         PanelClient := TPanel.Create(ScrollBoxClients);
         PanelClient.Parent := ScrollBoxClients;
       with PanelClient do begin
-      Left := 18;
+      Left := 6;
       Top := topPanel;
       Width := 405;
       Height := 70;
@@ -118,7 +136,7 @@ begin
         Top := 29;
         Width := 166;
         Height := 15;
-        Caption := 'Замер назначил: '+fieldByname('ManagerID').AsString;
+        Caption := 'Замер назначил: '+fieldByname('UserName').AsString;
         Font.Charset := RUSSIAN_CHARSET;
         Font.Color := clWindowText;
         Font.Height := -13;
@@ -146,8 +164,7 @@ begin
 
     end;
   end;
+
 end;
-
-
 
 end.
